@@ -3,7 +3,7 @@ import { Search, Home, Users, CalendarCheck, Moon, MessageCircleQuestion, Clipbo
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import DummyContentPage from './DummyContentPage';
-import paLogo from './assets/layout/operesto.png'
+import paLogo from './assets/layout/Cherry.png';
 import useClickOutside from './hooks/useClickOutside';
 import findMenuByPath from './functions/locationFunctions';
 import { getMenuList, ICON_MAP, MENU } from './Sidemenu';
@@ -27,7 +27,7 @@ const Navbar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
       {/* LEFT */}
       <div className="navbar-left">
         <div className="logo-container">
-          {/* <img src={paLogo} alt="Operesto" /> */}
+          <img src={paLogo} alt="Cherry" />
         </div>
       </div>
 
@@ -232,12 +232,11 @@ const App = () => {
             <Route path='/authentication/otp' element={<OTP />} />
             <Route element={<AppLayout />}>
               <Route path='/dashboard' element={<AdminDashboard />} />
-              <Route path='/*' element={<AdminDashboard />} />
               <Route path='/reservation' element={<Reservation />} />
               <Route path='/night-audit' element={<NightAudit />} />
             </Route>
           </Routes>
-        </Suspense>
+        </Suspense>   
       </Router>
     </div>
   );

@@ -1,12 +1,12 @@
 import React from "react";
 
 const data = [
-  { label: "Direct Booking", value: 61, color: "#5b9bd5" },
-  { label: "Booking.com", value: 12, color: "#2c5282" },
-  { label: "Agoda", value: 11, color: "#7bb1e1" },
-  { label: "Airbnb", value: 9, color: "#9cc7ea" },
-  { label: "Hotels.com", value: 5, color: "#1a365d" },
-  { label: "Others", value: 2, color: "#c2ddf5" }
+  { label: "Direct Booking", value: 61, color: "var(--primary-color)" },
+  { label: "Booking.com", value: 12, color: "var(--primary-mild" },
+  { label: "Agoda", value: 11, color: "var(--primary-light)" },
+  { label: "Airbnb", value: 9, color: "var(--primary-dark)" },
+  { label: "Hotels.com", value: 5, color: "var(--primary-lighter)" },
+  { label: "Others", value: 2, color: "var(--primary-lightest)" }
 ];
 
 const BookingPlatform = () => {

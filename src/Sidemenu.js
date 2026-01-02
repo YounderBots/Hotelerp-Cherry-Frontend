@@ -17,10 +17,9 @@ export const MENU =
     [
         {
             id: "dashboard",
-            label: "Home",
+            label: "Dashboard",
             icon: Home,
             path: "/dashboard",
-            children: []
         },
         {
             id: "reservation",
