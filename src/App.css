@@ -485,9 +485,8 @@ main {
 .app-body {
     display: flex;
     height: calc(100vh - 80px);
-    background: var(--primary-lighter);
+    background: var(--primary-lightest);
     overflow-x: auto;
-    margin-top: 10px;
 }
 
 /* LEFT NAV */

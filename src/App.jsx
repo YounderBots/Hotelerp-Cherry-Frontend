@@ -17,8 +17,19 @@ const Login = lazy(() => import('./Authentication/Pages/Login'));
 const OTP = lazy(() => import('./Authentication/Pages/OTP'));
 const Register = lazy(() => import('./Authentication/Pages/Register'));
 
-
-
+const Facilities = lazy(() => import('./MasterData/Facilities'));
+const RoomType = lazy(() => import('./MasterData/RoomType'));
+const BedType = lazy(() => import('./MasterData/BedType'));
+const HallFloor = lazy(() => import('./MasterData/HallFloor'));
+const Rooms = lazy(() => import('./MasterData/Rooms'));
+const DiscountType = lazy(() => import('./MasterData/DiscountType'));
+const TaxTypes = lazy(() => import('./MasterData/TaxTypes'));
+const PaymentMethods = lazy(() => import('./MasterData/PaymentMethods'));
+const IdentificationProof = lazy(() => import('./MasterData/IdentificationProof'));
+const CurrencyCountry = lazy(() => import('./MasterData/CurrencyCountry'));
+const HskTaskType = lazy(() => import('./MasterData/HskTaskType'));
+const Complementary = lazy(() => import('./MasterData/Complementary'));
+const ReservationStatus = lazy(() => import('./MasterData/ReservationStatus'));
 
 
 const Navbar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
@@ -234,6 +245,21 @@ const App = () => {
               <Route path='/dashboard' element={<AdminDashboard />} />
               <Route path='/reservation' element={<Reservation />} />
               <Route path='/night-audit' element={<NightAudit />} />
+
+              // Master Data Routes
+              <Route path='/facilities' element={<Facilities />} />
+              <Route path='/room_type' element={<RoomType />} />
+              <Route path='/bed_type' element={<BedType />} />
+              <Route path='/hall_floor' element={<HallFloor />} />
+              <Route path='/rooms' element={<Rooms />} />
+              <Route path='/discount_type' element={<DiscountType />} />
+              <Route path='/tax_types' element={<TaxTypes />} />
+              <Route path='/payment_methods' element={<PaymentMethods />} />
+              <Route path='/identification_proof' element={<IdentificationProof />} />
+              <Route path='/currency_country' element={<CurrencyCountry />} />
+              <Route path='/hsk_task_type' element={<HskTaskType />} />
+              <Route path='/complementary' element={<Complementary />} />
+              <Route path='/reservation_status' element={<ReservationStatus />} />
             </Route>
           </Routes>
         </Suspense>   

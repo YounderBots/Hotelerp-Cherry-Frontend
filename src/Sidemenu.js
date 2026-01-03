@@ -179,72 +179,72 @@ export const MENU =
             id: "master-data",
             label: "Master Data",
             icon: Layers,
-            path: "/dashboard/admin/master-data",
+            path: "/master-data",
             children: [
 
                 {
                     label: "Facilities",
-                    path: "/master-data/facilities"
+                    path: "/facilities"
                 },
 
                 {
                     label: "Room Type",
-                    path: "/master-data/room-type"
+                    path: "/room_type"
                 },
 
                 {
                     label: "Bed Type",
-                    path: "/master-data/bed-type"
+                    path: "/bed_type"
                 },
 
                 {
                     label: "Hall / Floor",
-                    path: "/master-data/hall-floor"
+                    path: "/hall_floor"
                 },
 
                 {
                     label: "Rooms",
-                    path: "/master-data/rooms"
+                    path: "/rooms"
                 },
 
                 {
                     label: "Discount Type",
-                    path: "/master-data/discount-type"
+                    path: "/discount_type"
                 },
 
                 {
                     label: "Tax Types",
-                    path: "/master-data/tax-types"
+                    path: "/tax_types"
                 },
 
                 {
                     label: "Payment Methods",
-                    path: "/master-data/payment-methods"
+                    path: "/payment_methods"
                 },
 
                 {
                     label: "Identification Proof",
-                    path: "/master-data/identification-proof"
+                    path: "/identification_proof"
                 },
 
                 {
                     label: "Currency & Country",
-                    path: "/master-data/currency-country"
+                    path: "/currency_country"
                 },
 
                 {
                     label: "HSK Task Type",
-                    path: "/master-data/hsk-task-type"
+                    path: "/hsk_task_type"
                 },
 
                 {
                     label: "Complementary",
-                    path: "/master-data/complementary"
+                    path: "/complementary"
                 },
 
                 {
                     label: "Reservation Status",
-                    path: "/master-data/reservation-status"
+                    path: "/reservation_status"
                 }
 
             ]
