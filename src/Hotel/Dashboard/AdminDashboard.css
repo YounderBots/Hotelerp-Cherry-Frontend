@@ -106,6 +106,10 @@
 /* KPI Cards */
 .kpi-card {
   background: var(--white);
+  background-image:linear-gradient(rgba(243, 238, 238, 0.842),
+      rgba(240, 240, 240, 0.753)), url('../../assets/cherryCard.jpg');
+  background-size: cover;
+   background-position: center; 
   color: var(--text-primary);
   padding: 1.5rem;
   border-radius: var(--border-radius-lg);
