@@ -55,7 +55,7 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(135deg, var(--primary-mild), var(--primary-mild));
   color: var(--text-white);
   box-shadow: var(--shadow-md);
 }
@@ -106,10 +106,10 @@
 /* KPI Cards */
 .kpi-card {
   background: var(--white);
-  background-image:linear-gradient(rgba(243, 238, 238, 0.842),
+  /* background-image:linear-gradient(rgba(243, 238, 238, 0.842),
       rgba(240, 240, 240, 0.753)), url('../../assets/cherryCard.jpg');
-  background-size: cover;
-   background-position: center; 
+  background-size: cover; */
+    background-position: center; 
   color: var(--text-primary);
   padding: 1.5rem;
   border-radius: var(--border-radius-lg);
@@ -127,9 +127,10 @@
 }
 
 .kpi-card.active {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-mild));
+  /* background: linear-gradient(135deg, var(--primary-mild), var(--primary-light)); */
+  background-color: var(--primary-mild);
   color: var(--text-white);
-  border-color: var(--primary-color);
+  /* border-color: var(--primary-color); */
 }
 
 .kpi-top {
@@ -361,23 +362,23 @@
 }
 
 .task-list li.done {
-  color: var(--success-color);
+  color: var(--primary-color);
 }
 
 .task-list li.done::before {
   content: '✓';
-  color: var(--success-color);
+  color: var(--primary-color);
   font-weight: bold;
   font-size: 1.1rem;
 }
 
 .task-list li.progress {
-  color: var(--warning-color);
+  color: var(--primary-color);
 }
 
 .task-list li.progress::before {
   content: '⏳';
-  color: var(--warning-color);
+  color: var(--primary-color);
   font-weight: bold;
   margin-right: 0.5rem;
 }
@@ -750,13 +751,13 @@
 
 /* Completed task */
 .task-list li.done {
-  color: var(--success-color);
+  color: var(--primary-color);
   font-weight: 700;
 }
 
 /* In progress */
 .task-list li.progress {
-  color: var(--warning-color);
+  color: var(--primary-mild);
   font-weight: 700;
 }
 

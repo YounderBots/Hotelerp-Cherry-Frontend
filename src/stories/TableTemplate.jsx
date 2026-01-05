@@ -488,7 +488,7 @@ const TableTemplate = ({
           <table className="table">
             <thead>
               <tr>
-                <th style={{ width: '200px' }} >
+                <th >  
                   S.No
                 </th>
                 {visibleColumnsData.map((column) => (
@@ -500,7 +500,7 @@ const TableTemplate = ({
                       width: column.width,
                       textAlign: column.align || 'left',
                       cursor: 'pointer'
-                    }}
+                    }}  
                   >
                     {column.title}
                     {sortConfig.key === column.key && (
@@ -533,7 +533,7 @@ const TableTemplate = ({
                     onClick={() => onRowClick?.(item)}
                     style={{ cursor: onRowClick ? 'pointer' : 'default' }}
                   >
-                    <td style={{ width: '200px' }}>{index + 1}</td>
+                    <td >{index + 1}</td>
                     {visibleColumnsData.map((column) => (
                       <td
                         key={column.key}

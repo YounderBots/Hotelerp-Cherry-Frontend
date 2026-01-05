@@ -45,7 +45,7 @@
 }
 
 .table-action-button--primary {
-  background-color: var(--primary-color);
+  background-color: var(--primary-mild);
   color: var(--white);
 }
 
@@ -169,7 +169,7 @@
   font-weight: 600;
   color: var(--text-secondary);
   font-size: 1rem;
-  text-transform: uppercase;
+  /* text-transform: lowercase; */
   letter-spacing: 0.05em;
   position: relative;
   user-select: none;

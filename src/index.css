@@ -18,7 +18,7 @@ body {
 :root {
   font-family: "Urbanist", sans-serif;
   font-optical-sizing: auto;
-  font-size: 16px;
+  font-size: 17px;
   font-style: normal;
 }
 
@@ -32,7 +32,7 @@ body {
   /* Rich Maroon */
   --primary-dark: #4a081b;
   /* Deep Wine */
-  --primary-mild: #9e1b3c;
+  --primary-mild: #db1b4b;
   /* Muted Maroon */
   --primary-light: #d88c9a;
   /* Soft Rose */
@@ -40,6 +40,7 @@ body {
   /* Blush Pink */
   --primary-lightest: #fff1f4;
   /* Very Soft Rose White */
+  --primary-pale: #FFF9F4;
 
   /* ================= SECONDARY — CHARCOAL ================= */
   --secondary-color: #1f2937;

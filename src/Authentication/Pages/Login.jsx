@@ -60,7 +60,7 @@ const Login = () => {
 
         {/* FOOTER */}
         <div className="auth-footer">
-          © 2026 Hotel ERP
+          © 2026 Cherry
         </div>
 
       </div>

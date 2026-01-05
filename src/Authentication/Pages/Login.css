@@ -3,7 +3,9 @@
 ========================= */
 .auth-page {
   min-height: 100vh;
-  background-image: url('../../assets/cherryBackground.jpg');
+  background-image:linear-gradient(rgba(243, 238, 238, 0.562),
+      rgba(240, 240, 240, 0.753)), url('../../assets/cherryBackground.jpg');
+  background-size: cover; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,7 +103,7 @@
   padding: 15px;
   background: linear-gradient(
     135deg,
-    var(--primary-color),
+    var(--primary-mild),
     var(--primary-mild)
   );
   color: var(--text-white);

@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import TableTemplate from "../stories/TableTemplate";
-import { X, Pencil, Trash2, Eye } from "lucide-react";
-import "../MasterData/MasterData.css";
+import TableTemplate from "../../stories/TableTemplate";
+import { UserPlus, Eye, Pencil, Trash2, X } from "lucide-react";
+import "../../MasterData/MasterData.css";
 
-const TaxTypes = () => {
+const GuestEnquiry = () => {
   const [data, setData] = useState([
     {
       id: 1,
-      taxCountry: "India",
-      taxName: "GST",
-      taxPercentage: 18,
+      inquiryMode: "Phone",
+      guestName: "Anand M",
+      responseDate: "2026-01-05",
+      followUpDate: "2026-01-07",
+      incidents: "Room availability",
+      status: "Open",
     },
     {
       id: 2,
-      taxCountry: "UAE",
-      taxName: "VAT",
-      taxPercentage: 5,
+      inquiryMode: "Email",
+      guestName: "Madhu M",
+      responseDate: "2026-01-04",
+      followUpDate: "2026-01-06",
+      incidents: "Pricing enquiry",
+      status: "In Progress",
     },
   ]);
 
@@ -25,9 +31,12 @@ const TaxTypes = () => {
   const [viewData, setViewData] = useState(null);
 
   const initialForm = {
-    taxCountry: "",
-    taxName: "",
-    taxPercentage: "",
+    inquiryMode: "",
+    guestName: "",
+    responseDate: "",
+    followUpDate: "",
+    incidents: "",
+    status: "Open",
   };
 
   const [formData, setFormData] = useState(initialForm);
@@ -45,24 +54,23 @@ const TaxTypes = () => {
     setShowViewModal(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setEditId(null);
+  const closeViewModal = () => {
+    setViewData(null);
+    setShowViewModal(false);
   };
 
-  const closeViewModal = () => {
-    setShowViewModal(false);
-    setViewData(null);
+  const closeModal = () => {
+    setEditId(null);
+    setShowModal(false);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((p) => ({ ...p, [name]: value }));
   };
 
   const handleSave = () => {
-    if (!formData.taxCountry || !formData.taxName || !formData.taxPercentage)
-      return;
+    if (!formData.inquiryMode || !formData.guestName) return;
 
     if (editId) {
       setData((prev) =>
@@ -73,7 +81,6 @@ const TaxTypes = () => {
     } else {
       setData((prev) => [...prev, { id: Date.now(), ...formData }]);
     }
-
     closeModal();
   };
 
@@ -92,31 +99,28 @@ const TaxTypes = () => {
   return (
     <>
       <TableTemplate
-        title="Tax Types List"
+        title="Guest Enquiry"
         hasActionButton
         searchable
         pagination
         exportable
         actionButton={{
-          label: "Add Tax",
+          label: "Add New Enquiry",
           onClick: openAddModal,
           size: "medium",
           variant: "primary",
         }}
         columns={[
+          { key: "inquiryMode", title: "Inquiry Mode", align: "center" },
+          { key: "guestName", title: "Guest Name", align: "center" },
           {
-            key: "taxCountry",
-            title: "Tax Country",
+            key: "responseDate",
+            title: "Response",
             align: "center",
           },
           {
-            key: "taxName",
-            title: "Tax Name",
-            align: "center",
-          },
-          {
-            key: "taxPercentage",
-            title: "Tax Percentage (%)",
+            key: "followUpDate",
+            title: "Follow Up",
             align: "center",
           },
           {
@@ -125,13 +129,7 @@ const TaxTypes = () => {
             align: "center",
             type: "custom",
             render: (row) => (
-              <div
-                style={{
-                  display: "flex",
-                  gap: "8px",
-                  justifyContent: "center",
-                }}
-              >
+              <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
                 <button
                   className="table-action-btn view"
                   onClick={() => openViewModal(row)}
@@ -162,27 +160,22 @@ const TaxTypes = () => {
         <div className="modal-overlay">
           <div className="modal-card modal-sm">
             <div className="modal-header">
-              <h3>View Tax</h3>
+              <h3>View Guest Enquiry</h3>
               <button onClick={closeViewModal}>
                 <X size={18} />
               </button>
             </div>
 
             <div className="modal-body single view">
-              <div className="form-group">
-                <label>Tax Country</label>
-                <input value={viewData.taxCountry} disabled />
-              </div>
-
-              <div className="form-group">
-                <label>Tax Name</label>
-                <input value={viewData.taxName} disabled />
-              </div>
-
-              <div className="form-group">
-                <label>Tax Percentage</label>
-                <input value={viewData.taxPercentage} disabled />
-              </div>
+              {Object.entries(viewData).map(
+                ([key, value]) =>
+                  key !== "id" && (
+                    <div className="form-group" key={key}>
+                      <label>{key.replace(/([A-Z])/g, " $1")}</label>
+                      <input value={value} disabled />
+                    </div>
+                  )
+              )}
             </div>
 
             <div className="modal-footer">
@@ -199,7 +192,7 @@ const TaxTypes = () => {
         <div className="modal-overlay">
           <div className="modal-card modal-sm">
             <div className="modal-header">
-              <h3>{editId ? "Edit Tax" : "Add Tax"}</h3>
+              <h3>{editId ? "Edit Enquiry" : "Add Enquiry"}</h3>
               <button onClick={closeModal}>
                 <X size={18} />
               </button>
@@ -207,31 +200,64 @@ const TaxTypes = () => {
 
             <div className="modal-body single">
               <div className="form-group">
-                <label>Country Name</label>
+                <label>Inquiry Mode</label>
                 <input
-                  name="taxCountry"
-                  value={formData.taxCountry}
+                  name="inquiryMode"
+                  value={formData.inquiryMode}
                   onChange={handleChange}
                 />
               </div>
 
               <div className="form-group">
-                <label>Tax Name</label>
+                <label>Guest Name</label>
                 <input
-                  name="taxName"
-                  value={formData.taxName}
+                  name="guestName"
+                  value={formData.guestName}
                   onChange={handleChange}
                 />
               </div>
 
               <div className="form-group">
-                <label>Tax Percentage</label>
+                <label>Response Date</label>
                 <input
-                  type="number"
-                  name="taxPercentage"
-                  value={formData.taxPercentage}
+                  type="date"
+                  name="responseDate"
+                  value={formData.responseDate}
                   onChange={handleChange}
                 />
+              </div>
+
+              <div className="form-group">
+                <label>Follow-up Date</label>
+                <input
+                  type="date"
+                  name="followUpDate"
+                  value={formData.followUpDate}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Incidents Inquiry</label>
+                <input
+                  name="incidents"
+                  value={formData.incidents}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Status</label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                >
+                  <option value="Open">Open</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Resolved">Resolved</option>
+                  <option value="Pending">Pending</option>
+                </select>
               </div>
             </div>
 
@@ -250,4 +276,4 @@ const TaxTypes = () => {
   );
 };
 
-export default TaxTypes;
+export default GuestEnquiry;

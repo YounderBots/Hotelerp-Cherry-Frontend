@@ -8,7 +8,20 @@ import useClickOutside from './hooks/useClickOutside';
 import findMenuByPath from './functions/locationFunctions';
 import { getMenuList, ICON_MAP, MENU } from './Sidemenu';
 import Reservation from './Hotel/Reservation/Reservation';
-import NightAudit from './Hotel/Night Audit/NightAudit';
+import LogoLoaderComponent from './Authentication/Pages/LogoLoaderComponent';
+import GuestEnquiry from './Hotel/Guest Enquiry/GuestEnquiry';
+import FloorLayout from './Restaurant/Floor & Table Setup/FloorLayout';
+import TableMaster from './Restaurant/Floor & Table Setup/TableMaster';
+import Employee from './Hotel/HRM/Employee';
+import AddNewReservation from './Hotel/Reservation/AddNewReservation';
+import Booking from './Hotel/Reservation/Booking';
+import RoomView from './Hotel/Reservation/RoomView';
+import ReservationView from './Hotel/Reservation/ReservationView';
+import UserReserved from './Hotel/Night Audit/UserReserved';
+import RoomBooked from './Hotel/Night Audit/RoomBooked';
+import SettlementSummary from './Hotel/Night Audit/SettlementSummary';
+import TaskAssign from './Hotel/House Keeper/TaskAssign';
+import RoomIncidentLog from './Hotel/House Keeper/RoomIncidentLog';
 
 const AdminDashboard = lazy(() => import('./Hotel/Dashboard/AdminDashboard'));
 const ForgotPassword = lazy(() => import('./Authentication/Pages/ForgotPassword'));
@@ -147,9 +160,14 @@ const AppContext = ({ menuList, activeMenu, setActiveMenu, activePath, setActive
               key={item.id}
               className={`nav-item ${isActive ? "active" : ""}`}
               onClick={() => {
+                
                 setActiveMenu(item);
                 // setActivePath([0]);
-                if (!item.children) navigate(item.path);
+                // if (!item.children)
+                if(item.path === undefined) {
+                  return navigate(item.children[0].path);
+                } 
+                  navigate(item.path);
               }}
             >
               {Icon && <Icon size={22} />}
@@ -232,7 +250,7 @@ const App = () => {
     <div className="app-layout">
       <Router>
 
-        <Suspense fallback={<p>loading</p>}>
+        <Suspense fallback={<LogoLoaderComponent />}>
 
           <Routes>
 
@@ -244,9 +262,28 @@ const App = () => {
             <Route element={<AppLayout />}>
               <Route path='/dashboard' element={<AdminDashboard />} />
               <Route path='/reservation' element={<Reservation />} />
-              <Route path='/night-audit' element={<NightAudit />} />
+              <Route path='/add_new_reservation' element={<AddNewReservation />} />
+              <Route path='/booking' element={<Booking />} />
+              <Route path='/room_view' element={<RoomView />} />
+              <Route path='/reservation_view' element={<ReservationView/>} />
 
-              // Master Data Routes
+              <Route path='/user_reserved_details' element={<UserReserved />} />
+              <Route path='/room_booked_details' element={<RoomBooked />} />
+              <Route path='/settlement_summary' element={<SettlementSummary />} />
+
+              <Route path='/guest_enquiry' element={<GuestEnquiry />} /> 
+
+              {/* // Restaurant Routes */}
+              <Route path='/floor_layout' element={<FloorLayout />} />
+              <Route path='/table_master' element={<TableMaster />} />
+
+              <Route path='/employee' element={<Employee />} />
+
+              <Route path='/task_assign' element={<TaskAssign />} />
+              <Route path='/room_incident_log' element={<RoomIncidentLog />} />
+
+
+              {/* // Master Data Routes */}
               <Route path='/facilities' element={<Facilities />} />
               <Route path='/room_type' element={<RoomType />} />
               <Route path='/bed_type' element={<BedType />} />
