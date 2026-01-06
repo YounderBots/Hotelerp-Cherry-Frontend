@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, Suspense, lazy } from 'react';
-import { Search, Home, Users, CalendarCheck, Moon, MessageCircleQuestion, ClipboardCheck, Utensils, Layers, Bell, User, ChevronRight, Menu, X, ChevronDown, Sun } from 'lucide-react';
+import { Search, Home, Users, CalendarCheck, Moon, MessageCircleQuestion, ClipboardCheck, Utensils, Layers, Bell, User, ChevronRight, Menu, X, ChevronDown, Sun, TableProperties } from 'lucide-react';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import DummyContentPage from './DummyContentPage';
@@ -22,6 +22,21 @@ import RoomBooked from './Hotel/Night Audit/RoomBooked';
 import SettlementSummary from './Hotel/Night Audit/SettlementSummary';
 import TaskAssign from './Hotel/House Keeper/TaskAssign';
 import RoomIncidentLog from './Hotel/House Keeper/RoomIncidentLog';
+import Orders from './Restaurant/Order Management/Orders';
+import TableReservation from './Restaurant/Table Reservation/TableReservation';
+import MenuManagement from './Restaurant/Menu Management/MenuManagement';
+import MainKitchen from './Restaurant/Kitchen Orders/MainKitchen';
+import Grill from './Restaurant/Kitchen Orders/Grill';
+import Dessert from './Restaurant/Kitchen Orders/Dessert';
+import Bar from './Restaurant/Kitchen Orders/Bar';
+import BillingPayments from './Restaurant/Billing & Payments/BillingPayments';
+import Stock from './Restaurant/Inventory/Stock';
+import ReceipeManagement from './Restaurant/Inventory/ReceipeManagement';
+import StaffMaster from './Restaurant/Staff Management/StaffMaster';
+import StaffPlanning from './Restaurant/Staff Management/StaffPlanning';
+import GuestManagement from './Restaurant/Guest Management/GuestManagement';
+import ReportAnalytics from './Restaurant/Report & Analytics/ReportAnalytics';
+
 
 const AdminDashboard = lazy(() => import('./Hotel/Dashboard/AdminDashboard'));
 const ForgotPassword = lazy(() => import('./Authentication/Pages/ForgotPassword'));
@@ -282,7 +297,22 @@ const App = () => {
               <Route path='/task_assign' element={<TaskAssign />} />
               <Route path='/room_incident_log' element={<RoomIncidentLog />} />
 
-
+              <Route path='/floor_layout' element={<FloorLayout />} />
+              <Route path='/table_master' element={<TableMaster />} />
+              <Route path='/orders' element={<Orders />} />
+              <Route path='/table_reservation' element={<TableReservation />} />
+              <Route path='/menus' element={<MenuManagement />} />
+              <Route path='/kot/main_kitchen' element={<MainKitchen />} />
+              <Route path='/kot/grill' element={<Grill />} />
+              <Route path='/kot/dessert' element={<Dessert />} />
+              <Route path='/kot/bar' element={<Bar/>} />
+              <Route path='/billing_payments' element={<BillingPayments/>} />
+              <Route path='/stock' element={<Stock/>} />
+              <Route path='/recipe_management' element={<ReceipeManagement />} />
+              <Route path='/staff_master' element={<StaffMaster />} />
+              <Route path='/staff_planning' element={<StaffPlanning />} />
+              <Route path='/guest_management' element={<GuestManagement />} />
+              <Route path='/reports_analytics' element={<ReportAnalytics />} />
               {/* // Master Data Routes */}
               <Route path='/facilities' element={<Facilities />} />
               <Route path='/room_type' element={<RoomType />} />

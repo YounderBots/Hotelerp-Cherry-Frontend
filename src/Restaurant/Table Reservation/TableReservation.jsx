@@ -2,43 +2,33 @@ import React, { useState } from "react";
 import TableTemplate from "../../stories/TableTemplate";
 import { UserPlus, Eye, Pencil, Trash2, X } from "lucide-react";
 
-const TableMaster = () => {
+const TableReservation = () => {
   const [data, setData] = useState([
     {
       id: 1,
-      tableId: "T01",
-      tableName: "Window Table 1",
+      reservationId: "TR-1001",
+      guestName: "Anand M",
+      contact: "9876543210",
+      date: "2026-01-07",
+      timeSlot: "7:00 PM - 9:00 PM",
       floor: "Indoor Floor",
-      capacity: 4,
-      tableType: "Standard",
-      assignedServer: "Ravi",
-      currentOrderId: "ORD-1021",
-      status: "Occupied",
-      isActive: "Yes",
+      tableId: "T01",
+      roomNo: "",
+      guests: 4,
+      source: "Walk-in",
     },
     {
       id: 2,
-      tableId: "T02",
-      tableName: "Poolside Table A",
+      reservationId: "TR-1002",
+      guestName: "Suresh K",
+      contact: "9123456789",
+      date: "2026-01-08",
+      timeSlot: "8:00 PM - 10:00 PM",
       floor: "Outdoor Floor",
-      capacity: 6,
-      tableType: "VIP",
-      assignedServer: "Suresh",
-      currentOrderId: "",
-      status: "Available",
-      isActive: "Yes",
-    },
-    {
-      id: 3,
-      tableId: "T03",
-      tableName: "Bar Counter 1",
-      floor: "Bar",
-      capacity: 2,
-      tableType: "Bar Counter",
-      assignedServer: "",
-      currentOrderId: "",
-      status: "Cleaning",
-      isActive: "No",
+      tableId: "T05",
+      roomNo: "203",
+      guests: 2,
+      source: "Hotel Guest",
     },
   ]);
 
@@ -48,14 +38,16 @@ const TableMaster = () => {
   const [viewData, setViewData] = useState(null);
 
   const initialForm = {
-    tableId: "",
-    tableName: "",
+    reservationId: "",
+    guestName: "",
+    contact: "",
+    date: "",
+    timeSlot: "",
     floor: "",
-    capacity: "",
-    tableType: "Standard",
-    assignedServer: "",
-    status: "Available",
-    isActive: "Yes",
+    tableId: "",
+    roomNo: "",
+    guests: "",
+    source: "Walk-in",
   };
 
   const [formData, setFormData] = useState(initialForm);
@@ -64,7 +56,10 @@ const TableMaster = () => {
 
   const openAddModal = () => {
     setEditId(null);
-    setFormData(initialForm);
+    setFormData({
+      ...initialForm,
+      reservationId: `TR-${Date.now().toString().slice(-4)}`,
+    });
     setShowModal(true);
   };
 
@@ -89,14 +84,11 @@ const TableMaster = () => {
   };
 
   const handleSave = () => {
-    if (!formData.tableId || !formData.tableName) return;
+    if (!formData.guestName || !formData.contact || !formData.date) return;
 
     const payload = {
-      ...(editId
-        ? data.find((i) => i.id === editId)
-        : { currentOrderId: "" }),
-      ...formData,
       id: editId || Date.now(),
+      ...formData,
     };
 
     if (editId) {
@@ -112,16 +104,7 @@ const TableMaster = () => {
 
   const handleEdit = (row) => {
     setEditId(row.id);
-    setFormData({
-      tableId: row.tableId,
-      tableName: row.tableName,
-      floor: row.floor,
-      capacity: row.capacity,
-      tableType: row.tableType,
-      assignedServer: row.assignedServer,
-      status: row.status,
-      isActive: row.isActive,
-    });
+    setFormData(row);
     setShowModal(true);
   };
 
@@ -134,26 +117,29 @@ const TableMaster = () => {
   return (
     <>
       <TableTemplate
-        title="Table Master"
+        title="Table Reservation"
         hasActionButton
         searchable
         pagination
         exportable
         actionButton={{
-          label: "Add Table",
+          icon: <UserPlus size={18} />,
+          label: "Add Reservation",
           onClick: openAddModal,
           size: "medium",
           variant: "primary",
         }}
         columns={[
-          { key: "tableId", title: "Table ID", align: "center" },
-          { key: "tableName", title: "Table Name", align: "center" },
+          { key: "reservationId", title: "Reservation ID", align: "center" },
+          { key: "guestName", title: "Guest Name", align: "center" },
+          { key: "contact", title: "Contact", align: "center" },
+          { key: "date", title: "Date", align: "center" },
+          { key: "timeSlot", title: "Time Slot", align: "center" },
           { key: "floor", title: "Floor", align: "center" },
-          { key: "capacity", title: "Capacity", align: "center" },
-          { key: "tableType", title: "Table Type", align: "center" },
-          { key: "assignedServer", title: "Assigned Server", align: "center" },
-          { key: "currentOrderId", title: "Current Order ID", align: "center" },
-          { key: "status", title: "Status", align: "center", type: "badge" },
+          { key: "tableId", title: "Table ID", align: "center" },
+          { key: "roomNo", title: "Room No", align: "center" },
+          { key: "guests", title: "Guests", align: "center" },
+          { key: "source", title: "Source", align: "center" },
           {
             key: "actions",
             title: "Actions",
@@ -182,7 +168,7 @@ const TableMaster = () => {
         <div className="modal-overlay">
           <div className="modal-card modal-sm">
             <div className="modal-header">
-              <h3>View Table</h3>
+              <h3>View Reservation</h3>
               <button onClick={closeViewModal}><X size={18} /></button>
             </div>
 
@@ -190,7 +176,7 @@ const TableMaster = () => {
               {Object.entries(viewData).map(([key, value]) => (
                 <div className="form-group" key={key}>
                   <label>{key.replace(/([A-Z])/g, " $1")}</label>
-                  <input value={value || "-"} disabled />
+                  <input value={value} disabled />
                 </div>
               ))}
             </div>
@@ -205,51 +191,42 @@ const TableMaster = () => {
       {/* ================= ADD / EDIT MODAL ================= */}
       {showModal && (
         <div className="modal-overlay">
-          <div className="modal-card modal-sm">
+          <div className="modal-card">
             <div className="modal-header">
-              <h3>{editId ? "Edit Table" : "Add Table"}</h3>
+              <h3>{editId ? "Edit Reservation" : "Add Reservation"}</h3>
               <button onClick={closeModal}><X size={18} /></button>
             </div>
 
-            <div className="modal-body single">
+            <div className="modal-body grid">
               {[
-                ["Table ID", "tableId"],
-                ["Table Name", "tableName"],
+                ["Reservation ID", "reservationId"],
+                ["Guest Name", "guestName"],
+                ["Contact Number", "contact"],
+                ["Reservation Date", "date", "date"],
+                ["Time Slot", "timeSlot"],
                 ["Floor", "floor"],
-                ["Seating Capacity", "capacity"],
-                ["Assigned Server", "assignedServer"],
-              ].map(([label, name]) => (
+                ["Table ID", "tableId"],
+                ["Room No", "roomNo"],
+                ["No. of Guests", "guests"],
+              ].map(([label, name, type]) => (
                 <div className="form-group" key={name}>
                   <label>{label}</label>
-                  <input name={name} value={formData[name]} onChange={handleChange} />
+                  <input
+                    type={type || "text"}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                  />
                 </div>
               ))}
 
               <div className="form-group">
-                <label>Table Type</label>
-                <select name="tableType" value={formData.tableType} onChange={handleChange}>
-                  <option>Standard</option>
-                  <option>VIP</option>
-                  <option>Private Dining</option>
-                  <option>Bar Counter</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Status</label>
-                <select name="status" value={formData.status} onChange={handleChange}>
-                  <option>Available</option>
-                  <option>Occupied</option>
-                  <option>Reserved</option>
-                  <option>Cleaning</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Is Active</label>
-                <select name="isActive" value={formData.isActive} onChange={handleChange}>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                <label>Source</label>
+                <select name="source" value={formData.source} onChange={handleChange}>
+                  <option>Walk-in</option>
+                  <option>Phone</option>
+                  <option>Online</option>
+                  <option>Hotel Guest</option>
                 </select>
               </div>
             </div>
@@ -265,4 +242,4 @@ const TableMaster = () => {
   );
 };
 
-export default TableMaster;
+export default TableReservation;

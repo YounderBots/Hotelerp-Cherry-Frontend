@@ -2,43 +2,31 @@ import React, { useState } from "react";
 import TableTemplate from "../../stories/TableTemplate";
 import { UserPlus, Eye, Pencil, Trash2, X } from "lucide-react";
 
-const TableMaster = () => {
+const Orders = () => {
   const [data, setData] = useState([
     {
       id: 1,
+      orderId: "ORD-1001",
       tableId: "T01",
-      tableName: "Window Table 1",
-      floor: "Indoor Floor",
-      capacity: 4,
-      tableType: "Standard",
+      roomNo: "",
+      guestName: "Anand M",
+      guests: 4,
+      orderTime: "12:45 PM",
       assignedServer: "Ravi",
-      currentOrderId: "ORD-1021",
-      status: "Occupied",
-      isActive: "Yes",
+      totalAmount: 2450,
+      paymentStatus: "Pending",
     },
     {
       id: 2,
-      tableId: "T02",
-      tableName: "Poolside Table A",
-      floor: "Outdoor Floor",
-      capacity: 6,
-      tableType: "VIP",
-      assignedServer: "Suresh",
-      currentOrderId: "",
-      status: "Available",
-      isActive: "Yes",
-    },
-    {
-      id: 3,
+      orderId: "ORD-1002",
       tableId: "T03",
-      tableName: "Bar Counter 1",
-      floor: "Bar",
-      capacity: 2,
-      tableType: "Bar Counter",
-      assignedServer: "",
-      currentOrderId: "",
-      status: "Cleaning",
-      isActive: "No",
+      roomNo: "205",
+      guestName: "Suresh K",
+      guests: 2,
+      orderTime: "01:30 PM",
+      assignedServer: "Kumar",
+      totalAmount: 1380,
+      paymentStatus: "Paid",
     },
   ]);
 
@@ -48,14 +36,16 @@ const TableMaster = () => {
   const [viewData, setViewData] = useState(null);
 
   const initialForm = {
+    orderId: "",
     tableId: "",
-    tableName: "",
-    floor: "",
-    capacity: "",
-    tableType: "Standard",
+    roomNo: "",
+    guestName: "",
+    guests: "",
+    orderDate: "",
+    orderTime: "",
     assignedServer: "",
-    status: "Available",
-    isActive: "Yes",
+    totalAmount: "",
+    paymentStatus: "Pending",
   };
 
   const [formData, setFormData] = useState(initialForm);
@@ -64,7 +54,10 @@ const TableMaster = () => {
 
   const openAddModal = () => {
     setEditId(null);
-    setFormData(initialForm);
+    setFormData({
+      ...initialForm,
+      orderId: `ORD-${Date.now().toString().slice(-4)}`,
+    });
     setShowModal(true);
   };
 
@@ -89,14 +82,11 @@ const TableMaster = () => {
   };
 
   const handleSave = () => {
-    if (!formData.tableId || !formData.tableName) return;
+    if (!formData.orderId || !formData.guestName) return;
 
     const payload = {
-      ...(editId
-        ? data.find((i) => i.id === editId)
-        : { currentOrderId: "" }),
-      ...formData,
       id: editId || Date.now(),
+      ...formData,
     };
 
     if (editId) {
@@ -112,16 +102,7 @@ const TableMaster = () => {
 
   const handleEdit = (row) => {
     setEditId(row.id);
-    setFormData({
-      tableId: row.tableId,
-      tableName: row.tableName,
-      floor: row.floor,
-      capacity: row.capacity,
-      tableType: row.tableType,
-      assignedServer: row.assignedServer,
-      status: row.status,
-      isActive: row.isActive,
-    });
+    setFormData(row);
     setShowModal(true);
   };
 
@@ -134,26 +115,32 @@ const TableMaster = () => {
   return (
     <>
       <TableTemplate
-        title="Table Master"
+        title="Orders"
         hasActionButton
         searchable
         pagination
         exportable
         actionButton={{
-          label: "Add Table",
+          label: "Add Order",
           onClick: openAddModal,
           size: "medium",
           variant: "primary",
         }}
         columns={[
+          { key: "orderId", title: "Order ID", align: "center" },
           { key: "tableId", title: "Table ID", align: "center" },
-          { key: "tableName", title: "Table Name", align: "center" },
-          { key: "floor", title: "Floor", align: "center" },
-          { key: "capacity", title: "Capacity", align: "center" },
-          { key: "tableType", title: "Table Type", align: "center" },
-          { key: "assignedServer", title: "Assigned Server", align: "center" },
-          { key: "currentOrderId", title: "Current Order ID", align: "center" },
-          { key: "status", title: "Status", align: "center", type: "badge" },
+          { key: "roomNo", title: "Room No", align: "center" },
+          { key: "guestName", title: "Guest Name", align: "center" },
+          { key: "guests", title: "Guests", align: "center" },
+          { key: "orderTime", title: "Order Time", align: "center" },
+          { key: "assignedServer", title: "Server", align: "center" },
+          { key: "totalAmount", title: "Total Amount", align: "center" },
+          {
+            key: "paymentStatus",
+            title: "Payment",
+            align: "center",
+            type: "badge",
+          },
           {
             key: "actions",
             title: "Actions",
@@ -182,7 +169,7 @@ const TableMaster = () => {
         <div className="modal-overlay">
           <div className="modal-card modal-sm">
             <div className="modal-header">
-              <h3>View Table</h3>
+              <h3>View Order</h3>
               <button onClick={closeViewModal}><X size={18} /></button>
             </div>
 
@@ -190,7 +177,7 @@ const TableMaster = () => {
               {Object.entries(viewData).map(([key, value]) => (
                 <div className="form-group" key={key}>
                   <label>{key.replace(/([A-Z])/g, " $1")}</label>
-                  <input value={value || "-"} disabled />
+                  <input value={value} disabled />
                 </div>
               ))}
             </div>
@@ -205,51 +192,45 @@ const TableMaster = () => {
       {/* ================= ADD / EDIT MODAL ================= */}
       {showModal && (
         <div className="modal-overlay">
-          <div className="modal-card modal-sm">
+          <div className="modal-card">
             <div className="modal-header">
-              <h3>{editId ? "Edit Table" : "Add Table"}</h3>
+              <h3>{editId ? "Edit Order" : "Add Order"}</h3>
               <button onClick={closeModal}><X size={18} /></button>
             </div>
 
-            <div className="modal-body single">
+            <div className="modal-body grid">
               {[
+                ["Order ID", "orderId"],
                 ["Table ID", "tableId"],
-                ["Table Name", "tableName"],
-                ["Floor", "floor"],
-                ["Seating Capacity", "capacity"],
+                ["Room No", "roomNo"],
+                ["Guest Name", "guestName"],
+                ["No. of Guests", "guests"],
+                ["Order Date", "orderDate", "date"],
+                ["Order Time", "orderTime", "time"],
                 ["Assigned Server", "assignedServer"],
-              ].map(([label, name]) => (
+                ["Total Amount", "totalAmount"],
+              ].map(([label, name, type]) => (
                 <div className="form-group" key={name}>
                   <label>{label}</label>
-                  <input name={name} value={formData[name]} onChange={handleChange} />
+                  <input
+                    type={type || "text"}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                  />
                 </div>
               ))}
 
               <div className="form-group">
-                <label>Table Type</label>
-                <select name="tableType" value={formData.tableType} onChange={handleChange}>
-                  <option>Standard</option>
-                  <option>VIP</option>
-                  <option>Private Dining</option>
-                  <option>Bar Counter</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Status</label>
-                <select name="status" value={formData.status} onChange={handleChange}>
-                  <option>Available</option>
-                  <option>Occupied</option>
-                  <option>Reserved</option>
-                  <option>Cleaning</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Is Active</label>
-                <select name="isActive" value={formData.isActive} onChange={handleChange}>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                <label>Payment Status</label>
+                <select
+                  name="paymentStatus"
+                  value={formData.paymentStatus}
+                  onChange={handleChange}
+                >
+                  <option>Pending</option>
+                  <option>Paid</option>
+                  <option>Cancelled</option>
                 </select>
               </div>
             </div>
@@ -265,4 +246,4 @@ const TableMaster = () => {
   );
 };
 
-export default TableMaster;
+export default Orders;

@@ -482,3 +482,131 @@
     transition: none;
   }
 }
+
+/* =====================================================
+   BACKWARD COMPATIBILITY
+   React Modal Overlay → New Modal System
+===================================================== */
+
+/* Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal-backdrop, 1000);
+}
+
+/* Card */
+.modal-card {
+  background: var(--bg-primary);
+  border-radius: 14px;
+  width: 720px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+  animation: modalScale 0.25s ease;
+}
+
+/* Sizes */
+.modal-card[style*="max-width: 500"] { width: 500px; }
+.modal-card[style*="max-width: 600"] { width: 600px; }
+.modal-card[style*="max-width: 900"] { width: 900px; }
+.modal-card[style*="max-width: 1000"] { width: 1000px; }
+
+/* Header */
+.modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(
+    to right,
+    var(--primary-lightest),
+    var(--bg-primary)
+  );
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-header button {
+  background: var(--gray-100);
+  border: none;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-header button:hover {
+  background: var(--gray-200);
+  transform: translateY(-1px);
+}
+
+/* Body */
+.modal-body {
+  padding: 24px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.modal-body.single {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Footer */
+.modal-footer {
+  padding: 18px 24px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: var(--bg-secondary);
+}
+
+/* Buttons inside modal */
+.modal-footer .btn {
+  min-width: 100px;
+}
+
+/* Tables inside modal */
+.modal-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Scrollbar */
+.modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-card {
+    width: 92vw !important;
+  }
+}
