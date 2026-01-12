@@ -39,15 +39,7 @@ const RoomView = () => {
     <div className="roomview-wrapper">
       {/* ================= FILTER BAR ================= */}
       <div className="roomview-filters">
-        <div className="date-wrapper">
-          <input
-            type="date"
-            className="roomview-date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-          />
-          <CalendarDays size={16} />
-        </div>
+        
 
         <div className="roomview-tabs">
           {STATUS_TABS.map((tab) => (

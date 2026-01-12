@@ -363,7 +363,7 @@
    ROOM CARD
 ===================================================== */
 .roomview-card {
-  background: var(--primary-light);
+  background: var(--primary-lightest);
   border-radius: 14px;
   padding: 14px;
   border: 1px solid var(--border-color);
@@ -373,7 +373,7 @@
 .roomview-card-status {
   font-size: 14px;
   font-weight: 600;
-  color: var(--success-color, #16a34a);
+  color: var(--success-color);
   margin-bottom: 10px;
 }
 
@@ -620,7 +620,7 @@
 /* ================= DATES ================= */
 .reservation-dates {
   margin-top: 14px;
-  background: var(--primary-mild);
+  background: var(--primary-light);
   color: #fff;
   border-radius: 14px;
   padding: 14px;

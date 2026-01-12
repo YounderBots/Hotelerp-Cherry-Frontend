@@ -305,7 +305,7 @@ const Modal = ({
               {modalActions.map((action, index) => (
                 <button
                   key={action.key || index}
-                  className={`btn btn--${action.variant || 'primary'}`}
+                  className={`btn ${action.variant || 'primary'}`}
                   onClick={action.onClick}
                   disabled={action.disabled || isExiting}
                   autoFocus={action.autoFocus}

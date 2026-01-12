@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import TableTemplate from "../../stories/TableTemplate";
-import { UserPlus, Eye, Pencil, X } from "lucide-react";
-import "./Reservation.css";
+import { UserPlus, Eye, Pencil, Trash2, X } from "lucide-react";
 
 const Booking = () => {
   const [data, setData] = useState([
@@ -56,7 +55,7 @@ const Booking = () => {
   const [mode, setMode] = useState("add"); // add | edit | view
   const [selectedId, setSelectedId] = useState(null);
 
-  /* ---------------- HANDLERS ---------------- */
+  /* ================= HANDLERS ================= */
 
   const openAddModal = () => {
     setFormData(initialForm);
@@ -76,6 +75,12 @@ const Booking = () => {
     setFormData(row);
     setMode("view");
     setShowModal(true);
+  };
+
+  const handleDelete = (row) => {
+    if (window.confirm("Are you sure you want to delete this booking?")) {
+      setData((prev) => prev.filter((i) => i.id !== row.id));
+    }
   };
 
   const closeModal = () => {
@@ -98,11 +103,7 @@ const Booking = () => {
     } else {
       setData((prev) => [
         ...prev,
-        {
-          ...formData,
-          id: Date.now(),
-          roomNo: "Auto",
-        },
+        { ...formData, id: Date.now(), roomNo: "Auto" },
       ]);
     }
     closeModal();
@@ -110,7 +111,7 @@ const Booking = () => {
 
   const isView = mode === "view";
 
-  /* ---------------- UI ---------------- */
+  /* ================= UI ================= */
 
   return (
     <>
@@ -121,15 +122,14 @@ const Booking = () => {
         pagination
         exportable
         actionButton={{
-          icon: <UserPlus size={18} />,
           label: "Add Booking",
           onClick: openAddModal,
           variant: "primary",
         }}
         columns={[
           { key: "roomNo", title: "Room No", align: "center" },
-          { key: "firstName", title: "First Name" },
-          { key: "lastName", title: "Last Name" },
+          { key: "firstName", title: "First Name", align: "center" },
+          { key: "lastName", title: "Last Name", align: "center" },
           {
             key: "actions",
             title: "Actions",
@@ -151,6 +151,13 @@ const Booking = () => {
                 >
                   <Pencil size={16} />
                 </button>
+                <button
+                  className="table-action-btn delete"
+                  title="Delete"
+                  onClick={() => handleDelete(row)}
+                >
+                  <Trash2 size={16} />
+                </button>
               </div>
             ),
           },
@@ -161,6 +168,7 @@ const Booking = () => {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-card">
+            {/* ===== HEADER ===== */}
             <div className="modal-header">
               <h3>
                 {mode === "add"
@@ -174,126 +182,35 @@ const Booking = () => {
               </button>
             </div>
 
-            <div className={`modal-body grid ${isView ? "view" : "edit"}`}>
-              <div className="form-group">
-                <label>First Name</label>
-                <input
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  disabled={isView}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Last Name</label>
-                <input
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  disabled={isView}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  disabled={isView}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Phone</label>
-                <input
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  disabled={isView}
-                />
-              </div>
-
-              {!isView && (
-                <>
-                  <div className="form-group">
-                    <label>Room Type</label>
-                    <select
-                      name="roomType"
-                      value={formData.roomType}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select</option>
-                      <option value="Standard">Standard</option>
-                      <option value="Deluxe">Deluxe</option>
-                      <option value="Suite">Suite</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label>Arrival Date</label>
-                    <input
-                      type="date"
-                      name="arrivalDate"
-                      value={formData.arrivalDate}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Departure Date</label>
-                    <input
-                      type="date"
-                      name="departureDate"
-                      value={formData.departureDate}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>No of Rooms</label>
-                    <input
-                      type="number"
-                      name="noOfRooms"
-                      value={formData.noOfRooms}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>No of Adults</label>
-                    <input
-                      type="number"
-                      name="noOfAdults"
-                      value={formData.noOfAdults}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>No of Children</label>
-                    <input
-                      type="number"
-                      name="noOfChilds"
-                      value={formData.noOfChilds}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>No of Nights</label>
-                    <input
-                      type="number"
-                      name="noOfNights"
-                      value={formData.noOfNights}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </>
-              )}
+            {/* ===== BODY (ALL FIELDS ALWAYS VISIBLE) ===== */}
+            <div className="modal-body grid">
+              {[
+                ["First Name", "firstName"],
+                ["Last Name", "lastName"],
+                ["Email", "email"],
+                ["Phone", "phone"],
+                ["Room Type", "roomType"],
+                ["Arrival Date", "arrivalDate", "date"],
+                ["Departure Date", "departureDate", "date"],
+                ["No of Rooms", "noOfRooms"],
+                ["No of Adults", "noOfAdults"],
+                ["No of Children", "noOfChilds"],
+                ["No of Nights", "noOfNights"],
+              ].map(([label, name, type]) => (
+                <div className="form-group" key={name}>
+                  <label>{label}</label>
+                  <input
+                    type={type || "text"}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    disabled={isView}
+                  />
+                </div>
+              ))}
             </div>
 
+            {/* ===== FOOTER ===== */}
             <div className="modal-footer">
               <button className="btn secondary" onClick={closeModal}>
                 {isView ? "Close" : "Cancel"}
